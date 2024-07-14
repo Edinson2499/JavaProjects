@@ -1,0 +1,48 @@
+import javax.swing.*;
+import java.text.DecimalFormat;
+import java.util.Scanner;
+
+public class DetalleFactura {
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        String nombreFac = "";
+
+        while (nombreFac == null || nombreFac.trim().isEmpty()) {
+            nombreFac = JOptionPane.showInputDialog(null, "Ingrese el nombre de la factura");
+            if (nombreFac == null || nombreFac.trim().isEmpty()) {
+                JOptionPane.showMessageDialog(null, "El nombre de la factura no puede estar vacío. Por favor, ingrese un nombre válido.");
+            }
+        }
+
+        double preUnoFac = 0.0;
+        double preDosFac = 0.0;
+        int porImpuesto = 19;
+        double subTotFac = 0.0;
+        double impuesto = 0.0;
+        double totFac = 0.0;
+
+        try {
+            preUnoFac = Double.parseDouble(JOptionPane.showInputDialog(null, "Ingrese el precio 1 de la factura"));
+            preDosFac = Double.parseDouble(JOptionPane.showInputDialog(null, "Ingrese el precio 2 de la factura"));
+        } catch(NumberFormatException e){
+            JOptionPane.showMessageDialog(null, "Error: debe ingresar un número válido.");
+            main(args);
+            System.exit(0);
+        }
+
+        subTotFac = preUnoFac + preDosFac;
+        impuesto = (subTotFac * porImpuesto) / 100;
+        totFac = subTotFac + impuesto;
+        DecimalFormat df = new DecimalFormat("#.00");
+
+        String part1 = "La factura ";
+        String part2 = "Tiene un Precio bruto de: ";
+        String part3 = "Mas el impuesto de: ";
+        String part4 = " y el total después de impuesto es de $ : ";
+
+        String respuesta = part1 + nombreFac +"\n"+ part2 + df.format(subTotFac) +"\n"+ part3 + df.format(impuesto) + "\n"+part4 + df.format(totFac)+"\n"+" Gracias por su compra.";
+
+        JOptionPane.showMessageDialog(null, respuesta);
+    }
+}
